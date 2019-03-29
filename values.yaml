@@ -33,6 +33,7 @@ Master:
   # a restart loop.  Likewise if you disable the non-Jenkins identity store and instead use the Jenkins internal one,
   # you should revert Master.AdminUser to your preferred admin user:
   AdminUser: admin
+  AdminPassword: admin
   # AdminPassword: <defaults to random>
   # AdminSshKey: <defaults to auto-generated>
   # If CasC auto-reload is enabled, an SSH (RSA) keypair is needed.  Can either provide your own, or leave unconfigured to allow a random key to be auto-generated.
@@ -67,7 +68,7 @@ Master:
   # When setting RunAsUser to a different value than 0 also set FsGroup to the same value:
   # RunAsUser: <defaults to 0>
   # FsGroup: <will be omitted in deployment if RunAsUser is 0>
-  ServicePort: 8080
+  ServicePort: 80
   # For minikube, set this to NodePort, elsewhere use LoadBalancer
   # Use ClusterIP if your setup includes ingress controller
   ServiceType: LoadBalancer
@@ -137,11 +138,12 @@ Master:
 
   # List of plugins to be install during Jenkins master start
   InstallPlugins:
-    - kubernetes:1.14.0
-    - workflow-job:2.31
-    - workflow-aggregator:2.6
-    - credentials-binding:1.17
-    - git:3.9.1
+    - kubernetes
+    - workflow-job
+    - workflow-aggregator
+    - credentials-binding
+    - git
+    - configuration-as-code
 
   # Enable to always override the installed plugins with the values of 'Master.InstallPlugins' on upgrade or redeployment.
   # OverwritePlugins: true
@@ -175,9 +177,9 @@ Master:
   # become the content of the configuration yaml file.  The first line after this is a JCasC root element, eg jenkins, credentials,
   # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.  The example below creates a welcome message:
   JCasC:
-    enabled: false
-    PluginVersion: 1.5
-    SupportPluginVersion: 1.5
+    enabled: true
+    PluginVersion: 1.8
+    SupportPluginVersion: 1.8
     ConfigScripts:
       welcome-message: |
         jenkins:
@@ -361,7 +363,7 @@ rbac:
   install: true
   serviceAccountName: default
   # Role reference
-  roleRef: cluster-admin
+  roleRef: admin
   # Role kind (Role or ClusterRole)
   roleKind: ClusterRole
   # Role binding kind (RoleBinding or ClusterRoleBinding)
