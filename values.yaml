@@ -361,13 +361,13 @@ NetworkPolicy:
 ## Install Default RBAC roles and bindings
 rbac:
   install: true
-  serviceAccountName: default
+  serviceAccountName: jenkins
   # Role reference
-  roleRef: admin
+  roleRef: tiller-manager
   # Role kind (Role or ClusterRole)
-  roleKind: ClusterRole
+  roleKind: Role
   # Role binding kind (RoleBinding or ClusterRoleBinding)
-  roleBindingKind: ClusterRoleBinding
+  roleBindingKind: RoleBinding
 
 ## Backup cronjob configuration
 ## Ref: https://github.com/nuvo/kube-tasks
